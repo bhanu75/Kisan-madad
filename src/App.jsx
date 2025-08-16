@@ -570,10 +570,11 @@ return (
         message={toast.message}
         type={toast.type}
         onClose={hideToast}
-      />
-    )}
-  </div>
-);
+      <FooterModule />
+      )}
+    </div>
+  );
+};
 
   return (
     <div className="bg-gray-50 min-h-screen">
