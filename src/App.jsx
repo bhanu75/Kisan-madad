@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Users, Home, TrendingUp, Bell, User, Upload, Camera, Eye, Droplets, Bug, Leaf, DollarSign, Calendar, AlertTriangle } from 'lucide-react';
 
 // Import new components
-import MarketWidget from './components/MarketWidget';
-import LandownerWidget from './components/LandownerWidget';
+import MarketWidget from './components/MarketWidget.jsx';
+import LandownerWidget from './components/LandownerWidget.jsx';
 
 // ========================
 // UTILITY COMPONENTS
