@@ -322,7 +322,6 @@ const WIDGET_LAYOUTS = {
     'pestAlert',
     'irrigationSchedule',
     'marketPrices'
-    'landownerWidget'
   ],
   market: [
     'marketPrices',
