@@ -108,10 +108,3 @@ select:focus {
     padding-right: 1rem;
   }
 }
-
-/* Print Styles */
-@media print {
-  .no-print {
-    display: none;
-  }
-}
