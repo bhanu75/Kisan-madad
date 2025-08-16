@@ -457,38 +457,7 @@ const FarmScreen = ({ onImageUpload }) => (
   </div>
 );
 
-// landload wala data start yaha
 
-const [isSubmitting, setIsSubmitting] = useState(false);
-
-const handleLandownerSubmit = async (formData) => {
-  setIsSubmitting(true);
-  try {
-    console.log("Landowner Registration Data:", formData);
-    // Yaha pe backend API call kar sakte ho agar ready hai
-  } catch (error) {
-    console.error("Landowner submission error:", error);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
-return (
-  <div>
-    <HeaderModule />
-    <DashboardModule />
-    <FarmerProfileModule />
-
-    {/* Yahi pe apna naya module insert karna hai */}
-    <LandownerWidget
-      onSubmit={handleLandownerSubmit}
-      loading={isSubmitting}
-    />
-
-    <FooterModule />
-  </div>
-);
-// landload wala data end yaha
 
 // ========================
 // MAIN APP COMPONENT
@@ -498,6 +467,23 @@ const KisanMadadApp = () => {
   const [currentScreen, setCurrentScreen] = useState('login');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [loading, setLoading] = useState(false);
+
+  // ✅ Landowner wala part
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleLandownerSubmit = async (formData) => {
+    setIsSubmitting(true);
+    try {
+      console.log("Landowner Registration Data:", formData);
+      // Yaha pe backend API call kar sakte ho agar ready hai
+    } catch (error) {
+      console.error("Landowner submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  // ✅ Landowner wala part end
+
   const [toast, setToast] = useState({ visible: false, message: '', type: 'info' });
   const [notifications] = useState([
     {
@@ -507,12 +493,15 @@ const KisanMadadApp = () => {
       type: "info"
     },
     {
-      title: "कीट चेतावनी", 
+      title: "कीट चेतावनी",
       message: "एफिड्स का खतरा बढ़ रहा है",
       timestamp: "5 घंटे पहले",
       type: "warning"
     }
   ]);
+
+  // 👇 niche aur functions rahenge jaise handleLogin, showToast, hideToast...
+};
 
   const dashboardData = {
     farm: { totalArea: "5.2", crops: "3", mainCrop: "गेहूं" },
@@ -554,14 +543,37 @@ const KisanMadadApp = () => {
     setToast({ ...toast, visible: false });
   };
 
-  if (currentScreen === 'login') {
-    return (
-      <>
-        <LoginForm onSubmit={handleLogin} loading={loading} />
-        <Toast {...toast} onClose={hideToast} />
-      </>
-    );
-  }
+ // Agar login screen hai
+if (currentScreen === 'login') {
+  return (
+    <LoginForm onSubmit={handleLogin} loading={loading} />
+  );
+}
+
+// Agar main screen hai (login ke baad)
+return (
+  <div>
+    <HeaderModule />
+    <DashboardModule data={dashboardData} />
+    <FarmerProfileModule />
+
+    {/* ✅ Yahi pe Landowner Widget dikhana hai */}
+    <LandownerWidget
+      onSubmit={handleLandownerSubmit}
+      loading={isSubmitting}
+    />
+
+    <FooterModule />
+
+    {toast.visible && (
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        onClose={hideToast}
+      />
+    )}
+  </div>
+);
 
   return (
     <div className="bg-gray-50 min-h-screen">
