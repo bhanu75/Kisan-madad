@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Users, Home, TrendingUp, Bell, User, Upload, Camera, Eye, Droplets, Bug, Leaf, DollarSign, Calendar, AlertTriangle } from 'lucide-react';
 import MarketWidget from './components/MarketWidget';
-
+import LandownerWidget from './components/LandownerWidget';
 
 // ========================
 // UTILITY COMPONENTS
@@ -456,6 +456,39 @@ const FarmScreen = ({ onImageUpload }) => (
     </CardComponent>
   </div>
 );
+
+// landload wala data start yaha
+
+const [isSubmitting, setIsSubmitting] = useState(false);
+
+const handleLandownerSubmit = async (formData) => {
+  setIsSubmitting(true);
+  try {
+    console.log("Landowner Registration Data:", formData);
+    // Yaha pe backend API call kar sakte ho agar ready hai
+  } catch (error) {
+    console.error("Landowner submission error:", error);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+return (
+  <div>
+    <HeaderModule />
+    <DashboardModule />
+    <FarmerProfileModule />
+
+    {/* Yahi pe apna naya module insert karna hai */}
+    <LandownerWidget
+      onSubmit={handleLandownerSubmit}
+      loading={isSubmitting}
+    />
+
+    <FooterModule />
+  </div>
+);
+// landload wala data end yaha
 
 // ========================
 // MAIN APP COMPONENT
