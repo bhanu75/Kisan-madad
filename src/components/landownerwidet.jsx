@@ -769,73 +769,83 @@ export default LandownerRegistrationModule;focus:border-transparent"
     </div>
   );
 
-  // Step 4: Lease Terms
-  const renderLeaseTerms = () => (
-    <CardComponent title="लीज की शर्तें" statusColor="border-yellow-200">
-      <div className="space-y-4">
+// Step 4: Lease Terms
+const renderLeaseTerms = () => (
+  <CardComponent title="लीज की शर्तें" statusColor="border-yellow-200">
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          लीज का प्रकार *
+        </label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+            <input
+              type="radio"
+              name="leaseType"
+              value="rent"
+              checked={formData.leaseType === 'rent'}
+              onChange={(e) => updateFormData('leaseType', e.target.value)}
+              className="mr-3"
+            />
+            <div>
+              <div className="font-medium">किराया</div>
+              <div className="text-sm text-gray-600">निर्धारित किराया राशि</div>
+            </div>
+          </label>
+
+          <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+            <input
+              type="radio"
+              name="leaseType"
+              value="profit-share"
+              checked={formData.leaseType === 'profit-share'}
+              onChange={(e) => updateFormData('leaseType', e.target.value)}
+              className="mr-3"
+            />
+            <div>
+              <div className="font-medium">लाभ हिस्सेदारी</div>
+              <div className="text-sm text-gray-600">फसल की बिक्री में हिस्सा</div>
+            </div>
+          </label>
+        </div>
+        {errors.leaseType && <ValidationMessage message={errors.leaseType} />}
+      </div>
+
+      {formData.leaseType === 'rent' && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            लीज का प्रकार *
+            किराया राशि (प्रति एकड़/वर्ष) *
           </label>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-              <input
-                type="radio"
-                name="leaseType"
-                value="rent"
-                checked={formData.leaseType === 'rent'}
-                onChange={(e) => updateFormData('leaseType', e.target.value)}
-                className="mr-3"
-              />
-              <div>
-                <div className="font-medium">किराया</div>
-                <div className="text-sm text-gray-600">निर्धारित किराया राशि</div>
-              </div>
-            </label>
-
-            <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-              <input
-                type="radio"
-                name="leaseType"
-                value="profit-share"
-                checked={formData.leaseType === 'profit-share'}
-                onChange={(e) => updateFormData('leaseType', e.target.value)}
-                className="mr-3"
-              />
-              <div>
-                <div className="font-medium">लाभ हिस्सेदारी</div>
-                <div className="text-sm text-gray-600">फसल की बिक्री में हिस्सा</div>
-              </div>
-            </label>
-          </div>
-          {errors.leaseType && <ValidationMessage message={errors.leaseType} />}
+          <input
+            type="number"
+            value={formData.rentAmount}
+            onChange={(e) => updateFormData('rentAmount', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="₹ में राशि दर्ज करें"
+          />
+          {errors.rentAmount && <ValidationMessage message={errors.rentAmount} />}
         </div>
+      )}
 
-        {formData.leaseType === 'rent' && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              किराया राशि (प्रति एकड़/वर्ष) *
-            </label>
-            <input
-              type="number"
-              value={formData.rentAmount}
-              onChange={(e) => updateFormData('rentAmount', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              placeholder="₹ में राशि दर्ज करें"
-            />
-            {errors.rentAmount && <ValidationMessage message={errors.rentAmount} />}
-          </div>
-        )}
-
-        {formData.leaseType === 'profit-share' && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              लाभ हिस्सेदारी (%) *
-            </label>
-            <input
-              type="number"
-              min="1"
-              max="100"
-              value={formData.profitSharePercentage}
-              onChange={(e) => updateFormData('profitSharePercentage', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 
+      {formData.leaseType === 'profit-share' && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            लाभ हिस्सेदारी (%) *
+          </label>
+          <input
+            type="number"
+            min="1"
+            max="100"
+            value={formData.profitSharePercentage}
+            onChange={(e) => updateFormData('profitSharePercentage', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="लाभ प्रतिशत दर्ज करें"
+          />
+          {errors.profitSharePercentage && (
+            <ValidationMessage message={errors.profitSharePercentage} />
+          )}
+        </div>
+      )}
+    </div>
+  </CardComponent>
+);
