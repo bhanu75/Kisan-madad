@@ -309,7 +309,8 @@ const LandownerRegistrationModule = ({ onSubmit, loading = false }) => {
             placeholder="कोई अतिरिक्त शर्तें या नोट्स..."
           />
         </div>
-      </div>
+       </div>
+     </div>
     </CardComponent>
   );
 
