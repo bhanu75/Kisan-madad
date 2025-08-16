@@ -570,10 +570,10 @@ return (
         message={toast.message}
         type={toast.type}
         onClose={hideToast}
-      <FooterModule />
-      )}
-    </div>
-  );
+      />
+    )}
+  </div>
+);
 };
 
   return (
