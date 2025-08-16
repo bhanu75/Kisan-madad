@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Users, Home, TrendingUp, Bell, User, Upload, Camera, Eye, Droplets, Bug, Leaf, DollarSign, Calendar, AlertTriangle } from 'lucide-react';
+import MarketWidget from './components/MarketWidget';
+
 
 // ========================
 // UTILITY COMPONENTS
@@ -550,10 +552,11 @@ const KisanMadadApp = () => {
         {activeTab === 'dashboard' && <DashboardScreen data={dashboardData} />}
         {activeTab === 'farm' && <FarmScreen onImageUpload={handleImageUpload} />}
         {activeTab === 'market' && (
-          <div className="p-4 pb-20">
-            <MarketPricesWidget priceData={dashboardData.market} />
-          </div>
-        )}
+               <div className="p-4 pb-20">
+               <MarketWidget />
+               </div>
+         )}
+        }
         {activeTab === 'alerts' && (
           <div className="p-4 pb-20">
             <NotificationsPanel notifications={notifications} />
