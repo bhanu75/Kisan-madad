@@ -2,16 +2,22 @@ import { useEffect, useState } from "react";
 
 const WeatherWidget = ({ city = "Chittorgarh" }) => {
   const [weather, setWeather] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        // Step 1: Get lat/lon from Open-Meteo Geocoding API
+        // Step 1: Get lat/lon
         const geoRes = await fetch(
-          `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=hi&format=json`
+          `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`
         );
         const geoData = await geoRes.json();
-        if (!geoData.results || geoData.results.length === 0) return;
+        console.log("GeoData:", geoData);
+
+        if (!geoData.results || geoData.results.length === 0) {
+          setError("❌ Location not found");
+          return;
+        }
 
         const { latitude, longitude } = geoData.results[0];
 
@@ -20,15 +26,32 @@ const WeatherWidget = ({ city = "Chittorgarh" }) => {
           `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weathercode,wind_speed_10m,soil_temperature_0cm,soil_moisture_0_1cm&timezone=auto`
         );
         const data = await res.json();
-        setWeather(data.current);
-      } catch (error) {
-        console.error("Weather fetch error:", error);
+        console.log("WeatherData:", data);
+
+        // कुछ APIs "current" की जगह "current_weather" भेजती हैं
+        if (data.current) {
+          setWeather(data.current);
+        } else if (data.current_weather) {
+          setWeather({
+            temperature_2m: data.current_weather.temperature,
+            wind_speed_10m: data.current_weather.windspeed,
+            relative_humidity_2m: "--", // नहीं आता इस endpoint में
+            soil_temperature_0cm: "--",
+            soil_moisture_0_1cm: "--",
+          });
+        } else {
+          setError("⚠️ No current weather data found");
+        }
+      } catch (err) {
+        console.error("Weather fetch error:", err);
+        setError("⚡ API fetch failed");
       }
     };
 
     fetchWeather();
   }, [city]);
 
+  if (error) return <div>{error}</div>;
   if (!weather) return <div>Loading weather...</div>;
 
   return (
@@ -38,12 +61,15 @@ const WeatherWidget = ({ city = "Chittorgarh" }) => {
         {weather.temperature_2m}°C
       </div>
 
-      {/* Extra Details Grid */}
       <div className="grid grid-cols-2 gap-2 text-sm text-gray-700">
         <div>💧 आर्द्रता: {weather.relative_humidity_2m}%</div>
         <div>🌬️ हवा: {weather.wind_speed_10m} km/h</div>
         <div>🌱 मिट्टी तापमान: {weather.soil_temperature_0cm}°C</div>
-        <div>💦 मिट्टी नमी: {(weather.soil_moisture_0_1cm * 100).toFixed(1)}%</div>
+        <div>💦 मिट्टी नमी: 
+          {weather.soil_moisture_0_1cm !== "--" 
+            ? (weather.soil_moisture_0_1cm * 100).toFixed(1)+"%" 
+            : "--"}
+        </div>
       </div>
     </div>
   );
