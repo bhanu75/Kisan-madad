@@ -311,6 +311,8 @@ const WIDGET_REGISTRY = {
   marketPrices: MarketPricesWidget,
   marketWidget: MarketWidget,
   landownerWidget: LandownerWidget,
+  weatherWidget: WeatherWidget,
+
 };
 
 // Widget configuration for different layouts
