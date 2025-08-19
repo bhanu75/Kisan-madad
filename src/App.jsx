@@ -4,6 +4,7 @@ import { Users, Home, TrendingUp, Bell, User, Upload, Camera, Eye, Droplets, Bug
 // Import new components
 import MarketWidget from './components/MarketWidget.jsx';
 import LandownerWidget from './components/LandownerWidget.jsx';
+import WeatherWidget from './components/WeatherWidget.jsx';
 
 // ========================
 // UTILITY COMPONENTS
@@ -322,6 +323,7 @@ const WIDGET_LAYOUTS = {
     'cropHealth', 
     'soilHealth',
     'pestAlert',
+    'weatherWidget',
     'irrigationSchedule',
     'marketPrices'
   ],
