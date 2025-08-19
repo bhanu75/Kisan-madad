@@ -278,6 +278,27 @@ const IrrigationScheduleWidget = ({ scheduleData }) => (
 );
 
 
+const MarketPricesWidget = ({ priceData }) => (
+  <CardComponent title="बाजार भाव" statusColor="border-green-200">
+    <div className="space-y-2">
+      {(priceData?.crops || [
+        { name: "गेहूं", price: "₹2,150", change: "+₹50" },
+        { name: "चना", price: "₹5,200", change: "-₹100" }
+      ]).map((crop, idx) => (
+        <div key={idx} className="flex justify-between items-center">
+          <span className="text-sm font-medium">{crop.name}</span>
+          <div className="text-right">
+            <div className="text-sm font-semibold">{crop.price}</div>
+            <div className={`text-xs ${crop.change.includes('+') ? 'text-green-600' : 'text-red-600'}`}>
+              {crop.change}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </CardComponent>
+);
+
 
 // ========================
 // COMPONENT REGISTRY
