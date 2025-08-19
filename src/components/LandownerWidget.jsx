@@ -47,7 +47,7 @@ const ValidationMessage = ({ message, type = "error" }) => {
 };
 
 // Main Landowner Registration Component
-const LandownerRegistrationModule = ({ onSubmit, loading = false }) => {
+const LandownerWidget = ({ onSubmit, loading = false }) => {
   const [formData, setFormData] = useState({
     // Owner Information
     ownerName: '',
@@ -822,4 +822,4 @@ const LandownerRegistrationModule = ({ onSubmit, loading = false }) => {
   );
 };
 
-export default LandownerRegistrationModule;
+export default LandownerWidget;
