@@ -464,6 +464,7 @@ const BottomTabNavigation = ({ activeTab, onTabChange }) => {
     { id: 'farm', label: 'फार्म', icon: Leaf },
     { id: 'market', label: 'बाजार', icon: TrendingUp },
     { id: 'alerts', label: 'अलर्ट', icon: Bell },
+    { id: 'landowner', label: 'Landowner', icon: User },  
     { id: 'profile', label: 'प्रोफाइल', icon: User }
   ];
 
@@ -638,6 +639,12 @@ const KisanMadadApp = () => {
         {activeTab === 'dashboard' && <DashboardScreen data={dashboardData} />}
         {activeTab === 'farm' && <FarmScreen onImageUpload={handleImageUpload} />}
         {activeTab === 'market' && <MarketScreen data={dashboardData} />}
+         {/* 🔽 Yahan Landowner widgets ka layout call karna h */}
+        {activeTab === 'landowner' && (
+        <div className="p-4 pb-20">
+        <DynamicWidgetGrid layout="landowner" data={dashboardData} />
+        </div>
+        )}
         {activeTab === 'alerts' && (
           <div className="p-4 pb-20">
             <NotificationsPanel notifications={notifications} />
